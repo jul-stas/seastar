@@ -77,6 +77,7 @@ public:
 
     inet_address& operator=(const inet_address&) = default;
     bool operator==(const inet_address&) const;
+    bool operator<(const inet_address&) const;
 
     family in_family() const {
         return _in_family;

@@ -128,6 +128,14 @@ bool seastar::net::inet_address::operator==(const inet_address& o) const {
     }
 }
 
+bool seastar::net::inet_address::operator<(const inet_address& rhs) const {
+    const size_t len =
+            (_in_family == family::INET || rhs._in_family == family::INET)
+            ? sizeof(::in_addr)
+            : sizeof(::in6_addr);
+    return std::memcmp(&_in, &rhs._in, len) < 0;
+}
+
 seastar::net::inet_address::operator ::in_addr() const {
     if (_in_family != family::INET) {
         if (IN6_IS_ADDR_V4MAPPED(&_in6)) {
